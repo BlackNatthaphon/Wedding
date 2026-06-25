@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin — Wedding RSVP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Cormorant+Garamond:wght@400;600&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       --bg: #B8AF9E;
@@ -40,7 +49,7 @@
       padding: 2.5rem 2rem;
       width: 320px;
       text-align: center;
-      box-shadow: 0 8px 32px rgba(74,46,26,.15);
+      box-shadow: 0 8px 32px rgba(74, 46, 26, .15);
     }
 
     .login-title {
@@ -63,7 +72,9 @@
       margin-bottom: 1rem;
     }
 
-    .login-input:focus { border-color: var(--olive); }
+    .login-input:focus {
+      border-color: var(--olive);
+    }
 
     .btn {
       background: var(--olive);
@@ -79,7 +90,9 @@
       width: 100%;
     }
 
-    .btn:hover { background: #3a4428; }
+    .btn:hover {
+      background: #3a4428;
+    }
 
     .login-error {
       color: #c0392b;
@@ -89,7 +102,10 @@
     }
 
     /* ===== DASHBOARD ===== */
-    #dashboard { display: none; padding: 1.5rem; }
+    #dashboard {
+      display: none;
+      padding: 1.5rem;
+    }
 
     .dash-header {
       display: flex;
@@ -106,7 +122,11 @@
       color: var(--olive);
     }
 
-    .header-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .header-actions {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+    }
 
     .btn-sm {
       background: var(--olive);
@@ -120,13 +140,17 @@
       transition: background .2s;
     }
 
-    .btn-sm:hover { background: #3a4428; }
+    .btn-sm:hover {
+      background: #3a4428;
+    }
 
     .btn-danger {
       background: #8B2E2E;
     }
 
-    .btn-danger:hover { background: #6e2424; }
+    .btn-danger:hover {
+      background: #6e2424;
+    }
 
     /* ===== SUMMARY CARDS ===== */
     .summary-grid {
@@ -142,7 +166,7 @@
       border-radius: 10px;
       padding: 1rem;
       text-align: center;
-      box-shadow: 0 3px 10px rgba(74,46,26,.1);
+      box-shadow: 0 3px 10px rgba(74, 46, 26, .1);
     }
 
     .summary-num {
@@ -152,7 +176,11 @@
       color: var(--olive);
     }
 
-    .summary-label { font-size: .8rem; color: var(--brown); margin-top: .2rem; }
+    .summary-label {
+      font-size: .8rem;
+      color: var(--brown);
+      margin-top: .2rem;
+    }
 
     /* ===== FILTERS ===== */
     .filters {
@@ -173,7 +201,9 @@
       outline: none;
     }
 
-    .filter-input:focus { border-color: var(--olive); }
+    .filter-input:focus {
+      border-color: var(--olive);
+    }
 
     /* ===== TABLE ===== */
     .table-wrap {
@@ -181,7 +211,7 @@
       background: var(--cream);
       border: 1.5px solid var(--gold);
       border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(74,46,26,.1);
+      box-shadow: 0 3px 10px rgba(74, 46, 26, .1);
     }
 
     table {
@@ -195,14 +225,20 @@
       color: var(--cream);
     }
 
-    th, td {
+    th,
+    td {
       padding: .65rem .9rem;
       text-align: left;
       white-space: nowrap;
     }
 
-    tbody tr:nth-child(even) { background: #F0EBE0; }
-    tbody tr:hover { background: #E8E0D0; }
+    tbody tr:nth-child(even) {
+      background: #F0EBE0;
+    }
+
+    tbody tr:hover {
+      background: #E8E0D0;
+    }
 
     .badge {
       display: inline-block;
@@ -212,9 +248,20 @@
       font-weight: 600;
     }
 
-    .badge-morning { background: #FFF3CD; color: #856404; }
-    .badge-evening { background: #D1ECF1; color: #0C5460; }
-    .badge-both    { background: #D4EDDA; color: #155724; }
+    .badge-morning {
+      background: #FFF3CD;
+      color: #856404;
+    }
+
+    .badge-evening {
+      background: #D1ECF1;
+      color: #0C5460;
+    }
+
+    .badge-both {
+      background: #D4EDDA;
+      color: #155724;
+    }
 
     .btn-del {
       background: #8B2E2E;
@@ -227,7 +274,9 @@
       transition: background .2s;
     }
 
-    .btn-del:hover { background: #6e2424; }
+    .btn-del:hover {
+      background: #6e2424;
+    }
 
     .empty-row td {
       text-align: center;
@@ -244,6 +293,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- LOGIN -->
@@ -269,10 +319,22 @@
     </div>
 
     <div class="summary-grid">
-      <div class="summary-card"><div class="summary-num" id="sTotal">–</div><div class="summary-label">ยืนยันแล้ว</div></div>
-      <div class="summary-card"><div class="summary-num" id="sMorning">–</div><div class="summary-label">งานเช้า</div></div>
-      <div class="summary-card"><div class="summary-num" id="sEvening">–</div><div class="summary-label">งานเย็น</div></div>
-      <div class="summary-card"><div class="summary-num" id="sGuests">–</div><div class="summary-label">แขกทั้งหมด</div></div>
+      <div class="summary-card">
+        <div class="summary-num" id="sTotal">–</div>
+        <div class="summary-label">ยืนยันแล้ว</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num" id="sMorning">–</div>
+        <div class="summary-label">งานเช้า</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num" id="sEvening">–</div>
+        <div class="summary-label">งานเย็น</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num" id="sGuests">–</div>
+        <div class="summary-label">แขกทั้งหมด</div>
+      </div>
     </div>
 
     <div class="filters">
@@ -296,7 +358,7 @@
             <th>ช่วง</th>
             <th>อาหาร</th>
             <th>วันที่</th>
-            <th>ลบ</th>
+            <!-- <th>ลบ</th> -->
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -398,7 +460,7 @@
           <td><span class="badge ${sessionClass[r.session] || ''}">${sessionLabel[r.session] || r.session}</span></td>
           <td>${escHtml(r.dietary || '–')}</td>
           <td>${formatDate(r.createdAt)}</td>
-          <td><button class="btn-del" onclick="deleteRsvp('${r._id}')">ลบ</button></td>
+          <!-- <td><button class="btn-del" onclick="deleteRsvp('${r._id}')">ลบ</button></td> -->
         </tr>
       `).join('');
     }
@@ -429,7 +491,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `wedding_rsvp_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `wedding_rsvp_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -442,11 +504,12 @@
     }
 
     function escHtml(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     // Auto-login if token already stored
     if (getToken()) showDashboard();
   </script>
 </body>
+
 </html>
