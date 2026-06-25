@@ -27,20 +27,21 @@
       --paper: #FDFAF5;
     }
 
-    html {
+    html, body {
+      height: 100%;
+      overflow: hidden;
       scroll-behavior: smooth;
     }
 
     body {
       background: #B8AF9E;
-      min-height: 100vh;
       font-family: "Sarabun", sans-serif;
-      overflow-x: hidden;
     }
 
     /* ENV SCREEN */
     .env-screen {
-      min-height: 100vh;
+      height: 100vh;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
