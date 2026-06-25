@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Wedding RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #B8AF9E;
+      --cream: #F5F0E8;
+      --brown: #4A2E1A;
+      --olive: #4A5530;
+      --gold: #C9A96E;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Sarabun', sans-serif;
+      color: var(--brown);
+      min-height: 100vh;
+    }
+
+    /* ===== LOGIN ===== */
+    #loginScreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      background: var(--cream);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(74,46,26,.15);
+    }
+
+    .login-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--olive);
+      margin-bottom: 1.5rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid #C4B89A;
+      border-radius: 6px;
+      background: var(--cream);
+      color: var(--brown);
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 1rem;
+    }
+
+    .login-input:focus { border-color: var(--olive); }
+
+    .btn {
+      background: var(--olive);
+      color: var(--cream);
+      border: none;
+      border-radius: 6px;
+      padding: .7rem 1.5rem;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      width: 100%;
+    }
+
+    .btn:hover { background: #3a4428; }
+
+    .login-error {
+      color: #c0392b;
+      font-size: .85rem;
+      margin-top: .5rem;
+      display: none;
+    }
+
+    /* ===== DASHBOARD ===== */
+    #dashboard { display: none; padding: 1.5rem; }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .dash-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--olive);
+    }
+
+    .header-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+    .btn-sm {
+      background: var(--olive);
+      color: var(--cream);
+      border: none;
+      border-radius: 6px;
+      padding: .45rem 1rem;
+      font-family: 'Sarabun', sans-serif;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-sm:hover { background: #3a4428; }
+
+    .btn-danger {
+      background: #8B2E2E;
+    }
+
+    .btn-danger:hover { background: #6e2424; }
+
+    /* ===== SUMMARY CARDS ===== */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+      background: var(--cream);
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(74,46,26,.1);
+    }
+
+    .summary-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--olive);
+    }
+
+    .summary-label { font-size: .8rem; color: var(--brown); margin-top: .2rem; }
+
+    /* ===== FILTERS ===== */
+    .filters {
+      display: flex;
+      gap: .8rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-input {
+      padding: .5rem .8rem;
+      border: 1.5px solid #C4B89A;
+      border-radius: 6px;
+      background: var(--cream);
+      color: var(--brown);
+      font-family: 'Sarabun', sans-serif;
+      font-size: .9rem;
+      outline: none;
+    }
+
+    .filter-input:focus { border-color: var(--olive); }
+
+    /* ===== TABLE ===== */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--cream);
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(74,46,26,.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+    }
+
+    thead tr {
+      background: var(--olive);
+      color: var(--cream);
+    }
+
+    th, td {
+      padding: .65rem .9rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) { background: #F0EBE0; }
+    tbody tr:hover { background: #E8E0D0; }
+
+    .badge {
+      display: inline-block;
+      border-radius: 12px;
+      padding: .15rem .6rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .badge-morning { background: #FFF3CD; color: #856404; }
+    .badge-evening { background: #D1ECF1; color: #0C5460; }
+    .badge-both    { background: #D4EDDA; color: #155724; }
+
+    .btn-del {
+      background: #8B2E2E;
+      color: var(--cream);
+      border: none;
+      border-radius: 4px;
+      padding: .25rem .6rem;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn-del:hover { background: #6e2424; }
+
+    .empty-row td {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+    }
+
+    /* ===== STATUS BAR ===== */
+    .status-bar {
+      font-size: .8rem;
+      color: var(--olive);
+      margin-top: .8rem;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <div class="login-title">Admin Dashboard</div>
+      <div style="font-size:.9rem;margin-bottom:1.2rem;color:var(--brown)">งานแต่งงาน กานต์พิชชา &amp; ณัฐพล</div>
+      <input type="password" class="login-input" id="tokenInput" placeholder="Admin Token" />
+      <button class="btn" onclick="doLogin()">เข้าสู่ระบบ</button>
+      <div class="login-error" id="loginError">Token ไม่ถูกต้อง</div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <div class="dash-header">
+      <div class="dash-title">🌸 Wedding RSVP Admin</div>
+      <div class="header-actions">
+        <button class="btn-sm" onclick="loadData()">🔄 รีเฟรช</button>
+        <button class="btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+        <button class="btn-sm btn-danger" onclick="doLogout()">ออกจากระบบ</button>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-num" id="sTotal">–</div><div class="summary-label">ยืนยันแล้ว</div></div>
+      <div class="summary-card"><div class="summary-num" id="sMorning">–</div><div class="summary-label">งานเช้า</div></div>
+      <div class="summary-card"><div class="summary-num" id="sEvening">–</div><div class="summary-label">งานเย็น</div></div>
+      <div class="summary-card"><div class="summary-num" id="sGuests">–</div><div class="summary-label">แขกทั้งหมด</div></div>
+    </div>
+
+    <div class="filters">
+      <input class="filter-input" type="text" id="searchName" placeholder="🔍 ค้นหาชื่อ" oninput="renderTable()" />
+      <select class="filter-input" id="filterSession" onchange="renderTable()">
+        <option value="">ทุกช่วง</option>
+        <option value="morning">งานเช้า</option>
+        <option value="evening">งานเย็น</option>
+        <option value="both">ทั้งสองช่วง</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ชื่อ</th>
+            <th>เบอร์</th>
+            <th>แขก</th>
+            <th>ช่วง</th>
+            <th>อาหาร</th>
+            <th>วันที่</th>
+            <th>ลบ</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="status-bar" id="statusBar"></div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.hostname === "localhost" ? "http://localhost:3000" : "https://wedding-production-8b92.up.railway.app";
+    let allData = [];
+    let refreshTimer = null;
+
+    function getToken() { return sessionStorage.getItem('adminToken'); }
+
+    function doLogin() {
+      const token = document.getElementById('tokenInput').value.trim();
+      if (!token) return;
+      sessionStorage.setItem('adminToken', token);
+      showDashboard();
+    }
+
+    function doLogout() {
+      sessionStorage.removeItem('adminToken');
+      clearInterval(refreshTimer);
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('tokenInput').value = '';
+    }
+
+    document.getElementById('tokenInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadData();
+      refreshTimer = setInterval(loadData, 30000);
+    }
+
+    async function loadData() {
+      const token = getToken();
+      try {
+        const [listRes, sumRes] = await Promise.all([
+          fetch(`${API_BASE}/api/rsvp`, { headers: { 'x-admin-token': token } }),
+          fetch(`${API_BASE}/api/rsvp/summary`),
+        ]);
+
+        if (listRes.status === 401) {
+          document.getElementById('loginError').textContent = 'Token ไม่ถูกต้อง';
+          document.getElementById('loginError').style.display = 'block';
+          doLogout();
+          return;
+        }
+
+        allData = await listRes.json();
+        const sum = await sumRes.json();
+
+        document.getElementById('sTotal').textContent = sum.total;
+        document.getElementById('sMorning').textContent = sum.morning + sum.both;
+        document.getElementById('sEvening').textContent = sum.evening + sum.both;
+        document.getElementById('sGuests').textContent = sum.totalGuests;
+
+        renderTable();
+        document.getElementById('statusBar').textContent = `อัปเดตล่าสุด: ${new Date().toLocaleTimeString('th-TH')}`;
+      } catch {
+        document.getElementById('statusBar').textContent = 'ไม่สามารถโหลดข้อมูลได้';
+      }
+    }
+
+    function renderTable() {
+      const search = document.getElementById('searchName').value.toLowerCase();
+      const session = document.getElementById('filterSession').value;
+
+      const filtered = allData.filter(r => {
+        const matchName = r.name.toLowerCase().includes(search);
+        const matchSession = !session || r.session === session;
+        return matchName && matchSession;
+      });
+
+      const tbody = document.getElementById('tableBody');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="8">ไม่พบข้อมูล</td></tr>';
+        return;
+      }
+
+      const sessionLabel = { morning: 'งานเช้า', evening: 'งานเย็น', both: 'ทั้งสองช่วง' };
+      const sessionClass = { morning: 'badge-morning', evening: 'badge-evening', both: 'badge-both' };
+
+      tbody.innerHTML = filtered.map((r, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${escHtml(r.name)}</td>
+          <td>${escHtml(r.phone || '–')}</td>
+          <td>${r.guests || 1}</td>
+          <td><span class="badge ${sessionClass[r.session] || ''}">${sessionLabel[r.session] || r.session}</span></td>
+          <td>${escHtml(r.dietary || '–')}</td>
+          <td>${formatDate(r.createdAt)}</td>
+          <td><button class="btn-del" onclick="deleteRsvp('${r._id}')">ลบ</button></td>
+        </tr>
+      `).join('');
+    }
+
+    async function deleteRsvp(id) {
+      if (!confirm('ต้องการลบรายการนี้?')) return;
+      try {
+        await fetch(`${API_BASE}/api/rsvp/${id}`, {
+          method: 'DELETE',
+          headers: { 'x-admin-token': getToken() },
+        });
+        await loadData();
+      } catch {
+        alert('ลบไม่สำเร็จ');
+      }
+    }
+
+    function exportCSV() {
+      if (!allData.length) return alert('ไม่มีข้อมูล');
+      const headers = ['ชื่อ', 'เบอร์', 'จำนวนแขก', 'ช่วง', 'อาหารพิเศษ', 'ข้อความ', 'วันที่'];
+      const rows = allData.map(r => [
+        r.name, r.phone, r.guests, r.session, r.dietary, r.message,
+        formatDate(r.createdAt),
+      ].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(','));
+
+      const csv = '﻿' + [headers.join(','), ...rows].join('\r\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `wedding_rsvp_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '–';
+      return new Date(iso).toLocaleString('th-TH', {
+        dateStyle: 'short', timeStyle: 'short',
+      });
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // Auto-login if token already stored
+    if (getToken()) showDashboard();
+  </script>
+</body>
+</html>
